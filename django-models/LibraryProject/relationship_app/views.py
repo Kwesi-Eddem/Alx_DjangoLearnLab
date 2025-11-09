@@ -3,6 +3,10 @@ from django.views.generic.detail import DetailView
 # Create your views here.
 from .models import Library
 from .models import Book
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 def list_books(request):
     books = Book.objects.all()
@@ -14,9 +18,7 @@ class LibraryDetailView(DetailView):
     context_object_name = 'library'
 
 
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import render, redirect
+
 
 def user_login(request):
     if request.method == "POST":
