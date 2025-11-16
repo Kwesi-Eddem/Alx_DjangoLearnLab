@@ -25,10 +25,18 @@ SECRET_KEY = 'django-insecure-xm85@b4@fz)^t)st()(5h%@z+1z2lv721!lha=a5r8_pf8w!ou
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]
 
-
+#Browser-side protections
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
 # Application definition
+
+# Cookies over HTTPS only (requires HTTPS in production)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True  # Helps reduce JS access to CSRF cookie
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf', #👈 Added this line
-    'relationship_app'
+    'relationship_app',
+    'csp'
 ]
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
@@ -51,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware'
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -125,3 +135,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Adjust directives to your asset locations
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": ("'self'",),
+        "script-src": ("'self'",),
+        "style-src": ("'self'",),
+        "img-src": ("'self'", "data:"),
+        "connect-src": ("'self'",),
+        "object-src": ("'none'",),
+    }
+}
