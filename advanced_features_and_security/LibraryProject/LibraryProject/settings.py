@@ -169,3 +169,6 @@ SECURE_BROWSER_XSS_FILTER = True    # enable browser XSS protection
 
 # Referrer policy (optional but recommended)
 SECURE_REFERRER_POLICY = "same-origin"
+
+# Tell Django to trust the X-Forwarded-Proto header from your proxy
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
