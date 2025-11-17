@@ -146,3 +146,26 @@ CONTENT_SECURITY_POLICY = {
         "object-src": ("'none'",),
     }
 }
+
+# SECURITY CONFIGURATION
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure cookies (only sent over HTTPS)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True  # prevents JavaScript access to CSRF cookie
+
+# Security headers
+X_FRAME_OPTIONS = "DENY"  # prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # block MIME sniffing
+SECURE_BROWSER_XSS_FILTER = True    # enable browser XSS protection
+
+# Referrer policy (optional but recommended)
+SECURE_REFERRER_POLICY = "same-origin"
