@@ -5,6 +5,7 @@ from .models import Book
 from .serializers import BookSerializer
 from django_filters import rest_framework
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 class BookListView(generics.ListAPIView):
@@ -16,7 +17,7 @@ class BookListView(generics.ListAPIView):
 
     filterset_fields = ['title','author', 'publication_year']
 
-    search_fields = ['title', 'author_name']
+    search_fields = ['title', 'author__name']
     
     ordering_fields = ['title','publication_year']
     ordering = ['title']
@@ -38,12 +39,20 @@ class BookCreateView(generics.CreateAPIView):
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+
 class BookUpdateView(generics.UpdateAPIView):
-    queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_object(self):
+        book_id = self.request.data.get('id') or self.request.query_params.get('id')
+        return get_object_or_404(Book, pk=book_id)
+
 class BookDeleteView(generics.DestroyAPIView):
-    queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        book_id = self.request.data.get('id') or self.request.query_params.get('id')
+        return get_object_or_404(Book, pk=book_id)
