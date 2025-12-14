@@ -4,7 +4,7 @@ from .views import (
     PostListView, PostDetailView,
     PostCreateView, PostDeleteView, PostUpdateView,
     CommentCreateView, CommentUpdateView, CommentDeleteView,
-    SearchResultsView, PostsByTagView
+    SearchResultsView, PostsByTagView, PostByTagListView
 )
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
 
 
     # Tags & search
-    path('tags/<slug:tag_slug>/', PostsByTagView.as_view(), name='posts-by-tag'),
+    path('tags/<str:tag_name>/', PostsByTagView.as_view(), name='posts-by-tag'),
     path('search/', SearchResultsView.as_view(), name='search'),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
 ]
