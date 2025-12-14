@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Delete Post{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'js/scripts.js' %}"></script>
+
+<h1>Delete Post</h1>
+<p>Are you sure you want to delete "{{ object.title }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirm delete</button>
+  <a href="{% url 'post-detail' object.pk %}">Cancel</a>
+</form>
+{% endblock %}
