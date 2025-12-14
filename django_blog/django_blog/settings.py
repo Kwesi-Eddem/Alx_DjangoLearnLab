@@ -54,11 +54,12 @@ ROOT_URLCONF = 'django_blog.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # REQUIRED
+        'DIRS': [BASE_DIR / 'templates'],  # optional: global templates folder
+        'APP_DIRS': True,                  # tells Django to look in app/templates/
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -66,6 +67,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'django_blog.wsgi.application'
 
@@ -121,12 +123,6 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-]
-
-TEMPLATES = [
-    {
-        'DIRS' : [BASE_DIR / 'templates'],
-    },
 ]
 
 # Default primary key field type
